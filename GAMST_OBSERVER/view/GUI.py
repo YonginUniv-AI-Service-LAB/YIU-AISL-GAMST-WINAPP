@@ -60,6 +60,7 @@ class GUI:
     def update_seat_button_texts(self):
         if PsInfo.identifier is not None:
             new_text = f"좌석: {PsInfo.identifier}\n창: {PsInfo.name}\n상세: {truncate_text(PsInfo.title, 35)}"
+            # print(PsInfo.time)
             if PsInfo.name in GOOD_PROCESS:
                 bg = GOOD_COLOR
             elif PsInfo.name in SUSPECT_PROCESS:
