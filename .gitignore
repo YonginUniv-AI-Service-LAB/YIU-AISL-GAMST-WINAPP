@@ -1,0 +1,6 @@
+GAMST_OBSERVER/configuration/__pycache__/
+GAMST_OBSERVER/connection/__pycache__/
+GAMST_OBSERVER/dto/__pycache__/
+GAMST_OBSERVER/view/__pycache__/
+GAMST_PROVIDER/configuration/__pycache__/
+GAMST_PROVIDER/service/__pycache__/
