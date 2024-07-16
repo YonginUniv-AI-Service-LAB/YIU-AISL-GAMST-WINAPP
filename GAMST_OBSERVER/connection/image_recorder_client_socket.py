@@ -10,6 +10,7 @@ import struct
 import datetime
 import numpy as np
 
+from GAMST_OBSERVER.configuration.address import *
 from GAMST_OBSERVER.dto.Flag import *
 from GAMST_OBSERVER.dto.Mutex import *
 
@@ -72,7 +73,7 @@ def receive_video(client_socket, out):
         client_socket.close()
 
 
-def start_image_recorder_client_socket(host, port, identifier):
+def start_image_recorder_client_socket(host, identifier):
     global video_output
 
     # 영상 저장 경로 설정
@@ -92,7 +93,7 @@ def start_image_recorder_client_socket(host, port, identifier):
     FRAME_SIZE = (1280, 720)  # 화면 크기에 맞게 조정
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((host, port))
+    client_socket.connect((host, IMAGE_SOCKET_PORT))
     time.sleep(1)
     print(f"{identifier}번 스레드, TCP 영상 서버에 연결되었습니다.")
 
@@ -107,4 +108,4 @@ if __name__ == '__main__':
     from ..configuration.address import *
 
     Flag.is_record = True
-    start_image_recorder_client_socket("220.66.61.75", VIDEO_SOCKET_PORT, 0)
+    start_image_recorder_client_socket("localhost", 0)

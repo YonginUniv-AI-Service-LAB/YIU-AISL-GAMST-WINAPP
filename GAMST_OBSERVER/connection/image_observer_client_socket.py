@@ -7,6 +7,7 @@ import struct
 import pickle
 import numpy as np
 
+from GAMST_OBSERVER.configuration.address import *
 from GAMST_OBSERVER.dto.Flag import *
 
 global client_socket
@@ -78,13 +79,13 @@ def receive_video(button_index):
         client_socket.close()
 
 
-def start_image_observer_client_socket(host, port, button_index):
+def start_image_observer_client_socket(host, identifier):
     global client_socket
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((host, port))
+    client_socket.connect((host, IMAGE_SOCKET_PORT))
     print("TCP 서버에 연결되었습니다.")
 
-    receive_video(button_index)
+    receive_video(identifier)
     # receive_video(button_index)
 
     client_socket.close()
@@ -94,4 +95,4 @@ def start_image_observer_client_socket(host, port, button_index):
 if __name__ == '__main__':
     from GAMST_OBSERVER.configuration.address import *
 
-    start_image_observer_client_socket(OUTBOUND_HOST[0], VIDEO_SOCKET_PORT, 0)
+    start_image_observer_client_socket("localhost", 0)

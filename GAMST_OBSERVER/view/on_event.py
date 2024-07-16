@@ -17,7 +17,7 @@ def on_seat_button_click(button_index):
 
     print(f"seat_event(), 2. 좌석 버튼 {button_index}번이 눌렸습니다.")
     thread = threading.Thread(target=start_image_observer_client_socket,
-                              args=(OUTBOUND_HOST[button_index], VIDEO_SOCKET_PORT, button_index)
+                              args=(OUTBOUND_HOST[button_index], button_index)
                               )
     thread.start()
 
@@ -29,7 +29,7 @@ def on_record_button_click(button_object):
         Flag.is_record = True
         for identifier in range(len(OUTBOUND_HOST)):
             record_thread = threading.Thread(target=start_image_recorder_client_socket,
-                                             args=(OUTBOUND_HOST[identifier], VIDEO_SOCKET_PORT, identifier)
+                                             args=(OUTBOUND_HOST[identifier], identifier)
                                              )
             record_thread.daemon = True
             record_thread.start()

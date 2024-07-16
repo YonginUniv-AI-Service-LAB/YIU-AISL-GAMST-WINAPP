@@ -1,0 +1,10 @@
+# Directory
+.idea
+__pycache__
+videos
+
+# File
+address.py
+
+# Extension
+*.pyc

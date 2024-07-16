@@ -33,7 +33,7 @@ def start_image_provider_server_socket():
     global server_socket
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind((INBOUND_HOST, VIDEO_SOCKET_PORT))
+    server_socket.bind((INBOUND_HOST, IMAGE_SOCKET_PORT))
     server_socket.listen(1)
     print("1. TCP 영상 서버가 시작되었습니다. 연결을 기다리는 중...")
 
