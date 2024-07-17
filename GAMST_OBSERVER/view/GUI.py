@@ -7,6 +7,12 @@ from GAMST_OBSERVER.dto.PsInfo import *
 from GAMST_OBSERVER.view.on_event import *
 
 
+def truncate_text(text, max_length):
+    if len(text) > max_length:
+        return text[:max_length] + '...'
+    return text
+
+
 class GUI:
     def __init__(self):
         self.root = Tk()
@@ -26,7 +32,7 @@ class GUI:
 
         self.seat_grids = []
         for index in range(40):
-            button = Button(self.seat_frame, width=15, height=7)
+            button = Button(self.seat_frame, width=15, height=7, wraplength=110)
             button.config(command=partial(on_seat_button_click, index), bg=SEAT_OFFLINE_COLOR)  # 버튼 생성 후 command 설정
             self.seat_grids.append(button)
 
@@ -52,8 +58,9 @@ class GUI:
         self.record_start_button.grid(row=0, column=0, padx=20, pady=10)
 
     def update_seat_button_texts(self):
-        new_text = f"좌석 {PsInfo.identifier}\n" + f"{PsInfo.name}\n + f{PsInfo.title}"
         if PsInfo.identifier is not None:
+            new_text = f"좌석: {PsInfo.identifier}\n창: {PsInfo.name}\n상세: {truncate_text(PsInfo.title, 35)}"
+            # print(PsInfo.time)
             if PsInfo.name in GOOD_PROCESS:
                 bg = GOOD_COLOR
             elif PsInfo.name in SUSPECT_PROCESS:

@@ -3,6 +3,7 @@ import win32api
 import win32con
 import win32gui
 import win32process
+from datetime import datetime  # 시간 정보를 가져오기 위해 datetime 모듈을 추가로 임포트합니다.
 
 
 def get_process_information_json():
@@ -13,7 +14,11 @@ def get_process_information_json():
     cursor_process = get_process_information(cursor_hwnd)
     foreground_process = get_process_information(foreground_hwnd)
 
+    # 현재 시간을 가져와서 원하는 포맷으로 문자열로 변환합니다.
+    current_time = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+
     process_dict = {
+        "time": current_time,  # 시간 정보를 추가합니다.
         "foreground": {
             "name": foreground_process[0],
             "title": foreground_process[1]

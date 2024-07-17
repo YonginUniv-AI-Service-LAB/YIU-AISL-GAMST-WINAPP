@@ -50,7 +50,8 @@ def start_process_observer_server_socket():
             print(message_dict)
             ps_name = message_dict["foreground"]["name"]
             ps_title = message_dict["foreground"]["title"]
-            PsInfo.update_state(ps_identifier, ps_name, ps_title)
+            ps_time = message_dict["time"]
+            PsInfo.update_state(ps_identifier, ps_name, ps_title, ps_time)
         except Exception as e:
             print(f"데이터 수신 오류: {e}")
 
