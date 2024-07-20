@@ -58,19 +58,22 @@ class GUI:
         self.record_start_button.grid(row=0, column=0, padx=20, pady=10)
 
     def update_seat_button_texts(self):
-        for ps_information in ps_informations:
-            if ps_information.identifier is not None:
-                new_text = f"좌석: {ps_information.identifier}\n창: {ps_information.name}\n상세: {truncate_text(ps_information.title, 35)}"
-                # print(PsInfo.time)
-                if ps_information.name in GOOD_PROCESS:
-                    bg = GOOD_COLOR
-                elif ps_information.name in SUSPECT_PROCESS:
-                    bg = SUSPECT_COLOR
-                elif ps_information.name in WARNING_PROCESS:
+        for ps in ps_informations:
+            if ps.identifier is not None:
+                new_text = (f"{truncate_text(ps.foreground_name, 10)}\n"
+                            f"{truncate_text(ps.foreground_title, 10)}\n"
+                            f"{truncate_text(ps.cursor_name, 10)}\n"
+                            f"{truncate_text(ps.cursor_title, 10)}\n"
+                            )
+                if ps.foreground_name in WARNING_PROCESS or ps.cursor_name in WARNING_PROCESS:
                     bg = WARNING_COLOR
+                elif ps.foreground_name in SUSPECT_PROCESS or ps.cursor_name in SUSPECT_PROCESS:
+                    bg = SUSPECT_COLOR
+                elif ps.foreground_name in GOOD_PROCESS or ps.cursor_name in GOOD_PROCESS:
+                    bg = GOOD_COLOR
                 else:
                     bg = SEAT_ONLINE_COLOR
-                self.seat_grids[int(ps_information.identifier)].config(text=new_text, bg=bg)
+                self.seat_grids[int(ps.identifier)].config(text=new_text, bg=bg)
         self.root.after(1000, self.update_seat_button_texts)  # stackoverflow X, eventloop 에 의해 발생.
 
 

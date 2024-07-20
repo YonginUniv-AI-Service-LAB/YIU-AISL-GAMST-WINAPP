@@ -54,8 +54,8 @@ def start_process_observer_server_socket():
 
             fg_name = message_dict["foreground"]["name"]
             fg_title = message_dict["foreground"]["title"]
-            cs_name = message_dict["foreground"]["name"]
-            cs_title = message_dict["foreground"]["title"]
+            cs_name = message_dict["cursor"]["name"]
+            cs_title = message_dict["cursor"]["title"]
             time = current_time
 
             ps_informations[int(ps_identifier)].update_state(ps_identifier,
