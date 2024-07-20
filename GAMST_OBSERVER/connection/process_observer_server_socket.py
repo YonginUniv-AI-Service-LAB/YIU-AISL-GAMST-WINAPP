@@ -3,6 +3,7 @@ import json
 import atexit
 import signal
 import socket
+import datetime
 
 from GAMST_OBSERVER.configuration.address import *
 from GAMST_OBSERVER.dto.ProcessInformation import *
@@ -48,11 +49,20 @@ def start_process_observer_server_socket():
             message_dict = json.loads(message_json)
 
             print(message_dict)
-            ps_name = message_dict["foreground"]["name"]
-            ps_title = message_dict["foreground"]["title"]
-            ps_time = message_dict["time"]
 
-            ps_informations[int(ps_identifier)].update_state(ps_identifier, ps_name, ps_title, ps_time)
+            current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+
+            fg_name = message_dict["foreground"]["name"]
+            fg_title = message_dict["foreground"]["title"]
+            cs_name = message_dict["foreground"]["name"]
+            cs_title = message_dict["foreground"]["title"]
+            time = current_time
+
+            ps_informations[int(ps_identifier)].update_state(ps_identifier,
+                                                             fg_name, fg_title,
+                                                             cs_name, cs_title,
+                                                             time
+                                                             )
         except Exception as e:
             print(f"데이터 수신 오류: {e}")
 

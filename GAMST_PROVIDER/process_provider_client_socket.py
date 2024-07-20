@@ -34,9 +34,7 @@ def send_to_server(socket, identifier, message):
     bytes_to_send = str.encode(msg_from_client)
 
     try:
-        # 소켓을 UDP로 열고 서버의 IP/PORT로 메시지를 보낸다.
         socket.sendto(bytes_to_send, (OUTBOUND_HOST, PROCESS_SOCKET_PORT))
-
     except Exception as e:
         print(f"send_to_server(), 오류 발생: {e}")
 
