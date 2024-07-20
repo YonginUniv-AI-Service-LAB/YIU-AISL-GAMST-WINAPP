@@ -5,7 +5,7 @@ import signal
 import socket
 
 from GAMST_OBSERVER.configuration.address import *
-from GAMST_OBSERVER.dto.PsInfo import *
+from GAMST_OBSERVER.dto.ProcessInformation import *
 
 global server_socket
 
@@ -51,7 +51,8 @@ def start_process_observer_server_socket():
             ps_name = message_dict["foreground"]["name"]
             ps_title = message_dict["foreground"]["title"]
             ps_time = message_dict["time"]
-            PsInfo.update_state(ps_identifier, ps_name, ps_title, ps_time)
+
+            ps_informations[int(ps_identifier)].update_state(ps_identifier, ps_name, ps_title, ps_time)
         except Exception as e:
             print(f"데이터 수신 오류: {e}")
 

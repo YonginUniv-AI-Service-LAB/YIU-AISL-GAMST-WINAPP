@@ -3,7 +3,7 @@ from functools import partial
 
 from GAMST_OBSERVER.configuration.gui_color import *
 from GAMST_OBSERVER.configuration.process_word import *
-from GAMST_OBSERVER.dto.PsInfo import *
+from GAMST_OBSERVER.dto.ProcessInformation import *
 from GAMST_OBSERVER.view.on_event import *
 
 
@@ -39,13 +39,13 @@ class GUI:
         for row in range(5):
             for column in range(8):
                 if column == 0:
-                    self.seat_grids[row * 8 + column].grid(row=row, column=column, padx=(20, 0))  # 왼쪽에 패딩 추가
+                    self.seat_grids[row * 8 + column].grid(row=row, column=column, padx=(20, 0))  # 좌측 패딩 추가
                 elif column % 2 == 1:
-                    self.seat_grids[row * 8 + column].grid(row=row, column=column, padx=(0, 20))  # 오른쪽에 패딩 추가
+                    self.seat_grids[row * 8 + column].grid(row=row, column=column, padx=(0, 20))  # 우측 패딩 추가
                 if row == 0:
-                    self.seat_grids[row * 8 + column].grid(row=row, column=column, pady=(10, 0))  # 왼쪽에 패딩 추가
+                    self.seat_grids[row * 8 + column].grid(row=row, column=column, pady=(10, 0))  # 상단 패딩 추가
                 elif row == 4:
-                    self.seat_grids[row * 8 + column].grid(row=row, column=column, pady=(0, 15))  # 왼쪽에 패딩 추가
+                    self.seat_grids[row * 8 + column].grid(row=row, column=column, pady=(0, 15))  # 하단 패딩 추가
                 else:
                     self.seat_grids[row * 8 + column].grid(row=row, column=column)
 
@@ -58,18 +58,19 @@ class GUI:
         self.record_start_button.grid(row=0, column=0, padx=20, pady=10)
 
     def update_seat_button_texts(self):
-        if PsInfo.identifier is not None:
-            new_text = f"좌석: {PsInfo.identifier}\n창: {PsInfo.name}\n상세: {truncate_text(PsInfo.title, 35)}"
-            # print(PsInfo.time)
-            if PsInfo.name in GOOD_PROCESS:
-                bg = GOOD_COLOR
-            elif PsInfo.name in SUSPECT_PROCESS:
-                bg = SUSPECT_COLOR
-            elif PsInfo.name in WARNING_PROCESS:
-                bg = WARNING_COLOR
-            else:
-                bg = SEAT_ONLINE_COLOR
-            self.seat_grids[int(PsInfo.identifier)].config(text=new_text, bg=bg)
+        for ps_information in ps_informations:
+            if ps_information.identifier is not None:
+                new_text = f"좌석: {ps_information.identifier}\n창: {ps_information.name}\n상세: {truncate_text(ps_information.title, 35)}"
+                # print(PsInfo.time)
+                if ps_information.name in GOOD_PROCESS:
+                    bg = GOOD_COLOR
+                elif ps_information.name in SUSPECT_PROCESS:
+                    bg = SUSPECT_COLOR
+                elif ps_information.name in WARNING_PROCESS:
+                    bg = WARNING_COLOR
+                else:
+                    bg = SEAT_ONLINE_COLOR
+                self.seat_grids[int(ps_information.identifier)].config(text=new_text, bg=bg)
         self.root.after(1000, self.update_seat_button_texts)  # stackoverflow X, eventloop 에 의해 발생.
 
 
