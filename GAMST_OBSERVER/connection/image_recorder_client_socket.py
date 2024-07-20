@@ -45,7 +45,8 @@ def receive_video(client_socket, out):
     data = b""
     payload_size = struct.calcsize("L")
     try:
-        while Flag.is_record:
+        # while Flag.is_record:
+        while True:
             while len(data) < payload_size:
                 packet = client_socket.recv(4096)
                 if not packet:
@@ -76,6 +77,11 @@ def receive_video(client_socket, out):
 def start_image_recorder_client_socket(host, identifier):
     global video_output
 
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_socket.connect((host, IMAGE_SOCKET_PORT))
+    time.sleep(1)
+    print(f"{identifier}번 스레드, TCP 영상 서버에 연결되었습니다.")
+
     # 영상 저장 경로 설정
     current_datetime = datetime.datetime.now()
     formatted_datetime = current_datetime.strftime("%y%m%d_%H%M%S")
@@ -89,23 +95,17 @@ def start_image_recorder_client_socket(host, identifier):
 
     # 영상 포맷 설정
     FOURCC = cv2.VideoWriter_fourcc(*'XVID')
-    FPS = 30.0
-    FRAME_SIZE = (1280, 720)  # 화면 크기에 맞게 조정
+    FPS = 10.0
+    FRAME_SIZE = (1280, 720)
 
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((host, IMAGE_SOCKET_PORT))
-    time.sleep(1)
-    print(f"{identifier}번 스레드, TCP 영상 서버에 연결되었습니다.")
+    # VideoWriter 객체 생성
+    video_output = cv2.VideoWriter(output_filename, FOURCC, FPS, FRAME_SIZE)
 
-    video_output = cv2.VideoWriter(output_filename, FOURCC, FPS, FRAME_SIZE)  # VideoWriter 객체 생성
     receive_video(client_socket, video_output)
-
     client_socket.close()
     print(f"{identifier}번 스레드, TCP 영상 서버와 연결이 종료되었습니다.")
 
 
 if __name__ == '__main__':
-    from ..configuration.address import *
-
     Flag.is_record = True
     start_image_recorder_client_socket("localhost", 0)
