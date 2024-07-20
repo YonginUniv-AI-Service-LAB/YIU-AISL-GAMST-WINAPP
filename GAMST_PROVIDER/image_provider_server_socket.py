@@ -30,12 +30,13 @@ signal.signal(signal.SIGINT, signal_handler)
 signal.signal(signal.SIGTERM, signal_handler)
 
 
-def start_image_provider_server_socket():
+def start_image_provider_server_socket(port):
+    print(port)
     global server_socket
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind((INBOUND_HOST, IMAGE_SOCKET_PORT))
-    server_socket.listen(40)
+    server_socket.bind((INBOUND_HOST, port))
+    server_socket.listen(len(OUTBOUND_HOST))
     print("1. TCP 영상 서버가 시작되었습니다. 연결을 기다리는 중...")
 
     # 안전한 연결을 위한 시간 대기
@@ -52,4 +53,13 @@ def start_image_provider_server_socket():
 
 
 if __name__ == "__main__":
-    start_image_provider_server_socket()
+    processes = []
+
+    for PORT in IMAGE_SOCKET_PORT:
+        p = multiprocessing.Process(target=start_image_provider_server_socket, args=(PORT,))
+        # p.daemon = True
+        p.start()
+        processes.append(p)
+
+    for p in processes:
+        p.join()

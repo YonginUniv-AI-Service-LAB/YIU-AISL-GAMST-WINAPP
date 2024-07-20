@@ -30,8 +30,13 @@ def on_record_button_click(button_object):
         Flag.is_record = True
         for identifier in range(len(OUTBOUND_HOST)):
             # record_process = threading.Thread(target=start_image_recorder_client_socket,
+            port_index = identifier % len(IMAGE_SOCKET_PORT)
+            print("port_index", port_index)
             record_process = multiprocessing.Process(target=start_image_recorder_client_socket,
-                                                     args=(OUTBOUND_HOST[identifier], identifier)
+                                                     args=(OUTBOUND_HOST[identifier],
+                                                           IMAGE_SOCKET_PORT[port_index],
+                                                           identifier
+                                                           )
                                                      )
             record_process.daemon = True
             record_process.start()

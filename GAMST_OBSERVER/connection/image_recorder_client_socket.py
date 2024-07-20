@@ -74,11 +74,11 @@ def receive_video(client_socket, out):
         client_socket.close()
 
 
-def start_image_recorder_client_socket(host, identifier):
+def start_image_recorder_client_socket(host, port, identifier):
     global video_output
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((host, IMAGE_SOCKET_PORT))
+    client_socket.connect((host, port))
     time.sleep(1)
     print(f"{identifier}번 스레드, TCP 영상 서버에 연결되었습니다.")
 
@@ -107,5 +107,4 @@ def start_image_recorder_client_socket(host, identifier):
 
 
 if __name__ == '__main__':
-    Flag.is_record = True
-    start_image_recorder_client_socket("localhost", 0)
+    start_image_recorder_client_socket("localhost", 20001, 0)

@@ -79,10 +79,10 @@ def receive_video(button_index):
         client_socket.close()
 
 
-def start_image_observer_client_socket(host, identifier):
+def start_image_observer_client_socket(host, port, identifier):
     global client_socket
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((host, IMAGE_SOCKET_PORT))
+    client_socket.connect((host, port))
     print("TCP 서버에 연결되었습니다.")
 
     receive_video(identifier)
@@ -93,6 +93,4 @@ def start_image_observer_client_socket(host, identifier):
 
 
 if __name__ == '__main__':
-    from GAMST_OBSERVER.configuration.address import *
-
-    start_image_observer_client_socket("localhost", 0)
+    start_image_observer_client_socket("localhost", 20001, 0)
