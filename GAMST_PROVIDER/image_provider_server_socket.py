@@ -1,8 +1,9 @@
 import sys
-import time
 import atexit
 import socket
 import signal
+import threading
+import multiprocessing
 
 from configuration.address import *
 from service.image_service import *
@@ -34,18 +35,20 @@ def start_image_provider_server_socket():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server_socket.bind((INBOUND_HOST, IMAGE_SOCKET_PORT))
-    server_socket.listen(1)
+    server_socket.listen(40)
     print("1. TCP 영상 서버가 시작되었습니다. 연결을 기다리는 중...")
 
     # 안전한 연결을 위한 시간 대기
-    time.sleep(1)
+    time.sleep(0.1)
 
     while True:
         conn, addr = server_socket.accept()
         print(f"2. {addr}에서 연결되었습니다.")
 
-        thread = threading.Thread(target=send_image, args=(conn,))
-        thread.start()
+        ps = multiprocessing.Process(target=send_image, args=(conn,))
+        # ps = threading.Thread(target=send_image, args=(conn,))
+        ps.daemon = True
+        ps.start()
 
 
 if __name__ == "__main__":
