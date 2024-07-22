@@ -16,6 +16,6 @@ class ProcessInformation:
         self.time = time
 
 
-from GAMST_OBSERVER.configuration.address import *
+from configuration.address import *
 
 ps_informations = [ProcessInformation() for _ in range(len(OUTBOUND_HOST))]

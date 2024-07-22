@@ -10,9 +10,9 @@ import struct
 import datetime
 import numpy as np
 
-from GAMST_OBSERVER.configuration.address import *
-from GAMST_OBSERVER.dto.Flag import *
-from GAMST_OBSERVER.dto.Mutex import *
+from configuration.address import *
+from dto.Flag import *
+from dto.Mutex import *
 
 global client_socket
 global video_output

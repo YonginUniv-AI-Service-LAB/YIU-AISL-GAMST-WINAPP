@@ -1,6 +1,8 @@
 # Directory
 .idea
 __pycache__
+dist
+build
 videos
 
 # File
@@ -8,3 +10,5 @@ address.py
 
 # Extension
 *.pyc
+*.exe
+*.spec

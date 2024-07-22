@@ -1,10 +1,10 @@
 from tkinter import *
 from functools import partial
 
-from GAMST_OBSERVER.configuration.gui_color import *
-from GAMST_OBSERVER.configuration.process_word import *
-from GAMST_OBSERVER.dto.ProcessInformation import *
-from GAMST_OBSERVER.view.on_event import *
+from configuration.gui_color import *
+from configuration.process_word import *
+from dto.ProcessInformation import *
+from view.on_event import *
 
 
 def truncate_text(text, max_length):

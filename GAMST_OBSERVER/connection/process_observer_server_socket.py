@@ -5,8 +5,8 @@ import signal
 import socket
 import datetime
 
-from GAMST_OBSERVER.configuration.address import *
-from GAMST_OBSERVER.dto.ProcessInformation import *
+from configuration.address import *
+from dto.ProcessInformation import *
 
 global server_socket
 

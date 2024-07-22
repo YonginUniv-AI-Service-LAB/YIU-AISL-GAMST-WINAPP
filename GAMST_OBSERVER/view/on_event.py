@@ -1,12 +1,12 @@
 import multiprocessing
 import threading
 
-from GAMST_OBSERVER.configuration.gui_color import *
-from GAMST_OBSERVER.configuration.address import *
-from GAMST_OBSERVER.connection.image_observer_client_socket import *
-from GAMST_OBSERVER.connection.image_recorder_client_socket import *
-from GAMST_OBSERVER.dto.Flag import *
-from GAMST_OBSERVER.dto.Mutex import *
+from configuration.gui_color import *
+from configuration.address import *
+from connection.image_observer_client_socket import *
+from connection.image_recorder_client_socket import *
+from dto.Flag import *
+from dto.Mutex import *
 
 
 def on_seat_button_click(button_index):
@@ -19,7 +19,7 @@ def on_seat_button_click(button_index):
     view_thread = threading.Thread(target=start_image_observer_client_socket,
                                    args=(OUTBOUND_HOST[button_index], button_index)
                                    )
-    view_thread.daemon = True
+    # view_thread.daemon = True
     view_thread.start()
 
     print(f"seat_event(), 3. 좌석 영상 프로세스 {button_index}번 시작")

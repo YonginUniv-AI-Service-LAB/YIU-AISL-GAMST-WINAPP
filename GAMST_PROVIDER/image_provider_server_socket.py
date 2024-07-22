@@ -52,4 +52,6 @@ def start_image_provider_server_socket():
 
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
+
     start_image_provider_server_socket()

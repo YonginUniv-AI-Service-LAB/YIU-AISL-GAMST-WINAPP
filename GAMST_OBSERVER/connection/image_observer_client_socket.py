@@ -7,8 +7,8 @@ import struct
 import pickle
 import numpy as np
 
-from GAMST_OBSERVER.configuration.address import *
-from GAMST_OBSERVER.dto.Flag import *
+from configuration.address import *
+from dto.Flag import *
 
 global client_socket
 
