@@ -1,4 +1,4 @@
-class ProcessInformation:
+class ReportedInformation:
     def __init__(self):
         self.identifier = None
         self.foreground_name = None
@@ -18,4 +18,4 @@ class ProcessInformation:
 
 from configuration.address import *
 
-ps_informations = [ProcessInformation() for _ in range(len(OUTBOUND_HOST))]
+ps_informations = [ReportedInformation() for _ in range(CLIENT_COUNTS)]

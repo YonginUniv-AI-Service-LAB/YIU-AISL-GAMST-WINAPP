@@ -57,7 +57,7 @@ def start_process_provider_client_socket():
             print(f"! get_process_information_json(), 오류 발생: {e}")
 
         if process_json != prev_process_json:
-            bytes_to_send = send_to_server(client_socket, MY_UDP_IDENTIFIER, process_json)
+            bytes_to_send = send_to_server(client_socket, IDENTIFIER, process_json)
             prev_process_json = process_json
             print("# 발신 프로세스 정보:", bytes_to_send)
 

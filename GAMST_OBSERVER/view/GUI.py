@@ -3,7 +3,7 @@ from functools import partial
 
 from configuration.gui_color import *
 from configuration.process_word import *
-from dto.ProcessInformation import *
+from dto.ReportedInformation import *
 from view.on_event import *
 
 

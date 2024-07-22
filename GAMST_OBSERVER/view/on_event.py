@@ -6,8 +6,8 @@ from configuration.address import *
 from connection.image_observer_client_socket import *
 from connection.image_recorder_client_socket import *
 from dto.Flag import *
-from dto.Mutex import *
-from dto.ProcessCollector import *
+from dto.Collection import *
+from dto.ReportedInformation import *
 
 
 def on_seat_button_click(button_index):
@@ -18,7 +18,7 @@ def on_seat_button_click(button_index):
 
     print(f"seat_event(), 2. 좌석 버튼 {button_index}번이 눌렸습니다.")
     view_thread = threading.Thread(target=start_image_observer_client_socket,
-                                   args=(OUTBOUND_HOST[button_index], button_index)
+                                   args=(Collection.client_ip[button_index], button_index)
                                    )
     # view_thread.daemon = True
     view_thread.start()
@@ -29,21 +29,21 @@ def on_seat_button_click(button_index):
 def on_record_button_click(button_object):
     if not Flag.is_record:
         Flag.is_record = True
-        for identifier in range(len(OUTBOUND_HOST)):
+        for identifier, ip in Collection.client_ip.items():
             # record_process = threading.Thread(target=start_image_recorder_client_socket,
-            record_process = multiprocessing.Process(target=start_image_recorder_client_socket,
-                                                     args=(OUTBOUND_HOST[identifier], identifier)
-                                                     )
-            record_process.daemon = True
-            record_process.start()
-            ProcessCollector.records.append(record_process)
+            ps = multiprocessing.Process(target=start_image_recorder_client_socket,
+                                         args=(ip, identifier)
+                                         )
+            ps.daemon = True
+            ps.start()
+            Collection.record_process.append(ps)
         time.sleep(0.5)
         print("녹화 시작")
         button_object.config(text="중지", bg=RECORDING_COLOR)
 
     else:
         Flag.is_record = False
-        for record_process in ProcessCollector.records:
+        for record_process in Collection.record_process:
             record_process.terminate()
         print("녹화 중지")
         button_object.config(text="시작", bg=DEFAULT_COLOR)

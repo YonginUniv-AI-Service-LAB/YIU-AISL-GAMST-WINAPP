@@ -11,7 +11,8 @@ parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
 sys.path.insert(0, parent_dir)
 
 from configuration.address import *
-from dto.ProcessInformation import *
+from dto.Collection import *
+from dto.ReportedInformation import *
 
 global server_socket
 
@@ -63,11 +64,13 @@ def start_process_observer_server_socket():
             cs_title = message_dict["cursor"]["title"]
             time = current_time
 
-            ps_informations[int(ps_identifier)].update_state(ps_identifier,
-                                                             fg_name, fg_title,
-                                                             cs_name, cs_title,
-                                                             time
-                                                             )
+            ps_identifier = int(ps_identifier)
+            Collection.client_ip[ps_identifier] = addr[0]
+            ps_informations[ps_identifier].update_state(ps_identifier,
+                                                        fg_name, fg_title,
+                                                        cs_name, cs_title,
+                                                        time
+                                                        )
         except Exception as e:
             print(f"데이터 수신 오류: {e}")
 

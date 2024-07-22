@@ -8,6 +8,7 @@ import signal
 import socket
 import struct
 import datetime
+import threading
 import numpy as np
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -16,7 +17,6 @@ sys.path.insert(0, parent_dir)
 
 from configuration.address import *
 from dto.Flag import *
-from dto.Mutex import *
 
 global client_socket
 global video_output
@@ -91,7 +91,7 @@ def start_image_recorder_client_socket(host, identifier):
     formatted_datetime = current_datetime.strftime("%y%m%d_%H%M%S")
     directory_path = "./videos/" + current_datetime.strftime("%y%m%d") + f"/{identifier}번좌석"
 
-    with Mutex.lock:
+    with threading.Lock():
         if not os.path.exists(directory_path):
             os.makedirs(directory_path)
 
