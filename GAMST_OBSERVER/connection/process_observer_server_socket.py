@@ -1,9 +1,14 @@
+import os
 import sys
 import json
 import atexit
 import signal
 import socket
 import datetime
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+sys.path.insert(0, parent_dir)
 
 from configuration.address import *
 from dto.ProcessInformation import *

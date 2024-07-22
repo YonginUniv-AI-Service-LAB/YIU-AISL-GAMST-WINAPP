@@ -1,3 +1,4 @@
+import os
 import cv2
 import sys
 import atexit
@@ -6,6 +7,10 @@ import socket
 import struct
 import pickle
 import numpy as np
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+sys.path.insert(0, parent_dir)
 
 from configuration.address import *
 from dto.Flag import *
@@ -93,6 +98,4 @@ def start_image_observer_client_socket(host, identifier):
 
 
 if __name__ == '__main__':
-    from GAMST_OBSERVER.configuration.address import *
-
     start_image_observer_client_socket("localhost", 0)
