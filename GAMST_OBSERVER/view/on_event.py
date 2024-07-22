@@ -7,6 +7,7 @@ from connection.image_observer_client_socket import *
 from connection.image_recorder_client_socket import *
 from dto.Flag import *
 from dto.Mutex import *
+from dto.ProcessCollector import *
 
 
 def on_seat_button_click(button_index):
@@ -35,14 +36,14 @@ def on_record_button_click(button_object):
                                                      )
             record_process.daemon = True
             record_process.start()
-            Flag.record_processes.append(record_process)
+            ProcessCollector.records.append(record_process)
         time.sleep(0.5)
         print("녹화 시작")
         button_object.config(text="중지", bg=RECORDING_COLOR)
 
     else:
         Flag.is_record = False
-        for record_process in Flag.record_processes:
+        for record_process in ProcessCollector.records:
             record_process.terminate()
         print("녹화 중지")
         button_object.config(text="시작", bg=DEFAULT_COLOR)

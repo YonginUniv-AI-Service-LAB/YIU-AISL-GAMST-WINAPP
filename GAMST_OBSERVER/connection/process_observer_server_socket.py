@@ -53,7 +53,7 @@ def start_process_observer_server_socket():
             ps_identifier, message_json = decode_message.split("/", 1)
             message_dict = json.loads(message_json)
 
-            print(message_dict)
+            print("# 수신 프로세스 정보: ", message_dict)
 
             current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 

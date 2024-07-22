@@ -59,9 +59,7 @@ def start_process_provider_client_socket():
         if process_json != prev_process_json:
             bytes_to_send = send_to_server(client_socket, MY_UDP_IDENTIFIER, process_json)
             prev_process_json = process_json
-
-            print("# 갱신 정보:", process_json)
-            print("# 전송 정보:", bytes_to_send)
+            print("# 발신 프로세스 정보:", bytes_to_send)
 
 
 if __name__ == '__main__':
