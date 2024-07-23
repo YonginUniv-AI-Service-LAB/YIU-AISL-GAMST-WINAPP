@@ -1,10 +1,19 @@
+import os
+import sys
+import time
 from tkinter import *
 from functools import partial
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+sys.path.insert(0, parent_dir)
 
 from configuration.gui_color import *
 from configuration.process_word import *
 from dto.ReportedInformation import *
 from view.on_event import *
+
+LIFETIME = 7
 
 
 def truncate_text(text, max_length):
@@ -60,12 +69,10 @@ class GUI:
     def update_seat_button_texts(self):
         for ps in ps_informations:
             if ps.identifier is not None:
-                new_text = (f"{truncate_text(ps.foreground_name, 10)}\n"
-                            f"{truncate_text(ps.foreground_title, 10)}\n"
-                            f"{truncate_text(ps.cursor_name, 10)}\n"
-                            f"{truncate_text(ps.cursor_title, 10)}\n"
-                            )
-                if ps.foreground_name in WARNING_PROCESS or ps.cursor_name in WARNING_PROCESS:
+                if time.time() - ps.unix_time > LIFETIME:
+                    self.seat_grids[int(ps.identifier)].config(text="", bg=SEAT_OFFLINE_COLOR)
+                    continue
+                elif ps.foreground_name in WARNING_PROCESS or ps.cursor_name in WARNING_PROCESS:
                     bg = WARNING_COLOR
                 elif ps.foreground_name in SUSPECT_PROCESS or ps.cursor_name in SUSPECT_PROCESS:
                     bg = SUSPECT_COLOR
@@ -73,7 +80,14 @@ class GUI:
                     bg = GOOD_COLOR
                 else:
                     bg = SEAT_ONLINE_COLOR
+
+                new_text = (f"{truncate_text(ps.foreground_name, 10)}\n"
+                            f"{truncate_text(ps.foreground_title, 10)}\n"
+                            f"{truncate_text(ps.cursor_name, 10)}\n"
+                            f"{truncate_text(ps.cursor_title, 10)}\n"
+                            )
                 self.seat_grids[int(ps.identifier)].config(text=new_text, bg=bg)
+
         self.root.after(1000, self.update_seat_button_texts)  # stackoverflow X, eventloop 에 의해 발생.
 
 

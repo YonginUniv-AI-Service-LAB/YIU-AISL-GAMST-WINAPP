@@ -9,6 +9,7 @@ from service.process_service import *
 
 global client_socket
 
+ITERATION_TIME = 5
 
 def cleanup():
     client_socket.close()
@@ -46,11 +47,12 @@ def start_process_provider_client_socket():
     client_socket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     print("1. UDP 프로세스 클라이언트가 시작되었습니다.")
 
+    count = 1
     process_json = None
     prev_process_json = None
     while True:
+        start = time.time()
         time.sleep(1)
-
         try:
             process_json = get_process_information_json()
         except Exception as e:
@@ -58,8 +60,17 @@ def start_process_provider_client_socket():
 
         if process_json != prev_process_json:
             bytes_to_send = send_to_server(client_socket, IDENTIFIER, process_json)
-            prev_process_json = process_json
             print("# 발신 프로세스 정보:", bytes_to_send)
+            prev_process_json = process_json
+        elif count > ITERATION_TIME - 1:
+            bytes_to_send = send_to_server(client_socket, IDENTIFIER, process_json)
+            print("# 발신 프로세스 정보:", bytes_to_send)
+            count = 1
+        else:
+            count += 1
+
+        end = time.time()
+        print(end - start)
 
 
 if __name__ == '__main__':

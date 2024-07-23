@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import json
 import atexit
 import signal
@@ -56,20 +57,20 @@ def start_process_observer_server_socket():
 
             print("# 수신 프로세스 정보: ", message_dict)
 
-            current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+            unix_time = time.time()
+            print(unix_time)
 
             fg_name = message_dict["foreground"]["name"]
             fg_title = message_dict["foreground"]["title"]
             cs_name = message_dict["cursor"]["name"]
             cs_title = message_dict["cursor"]["title"]
-            time = current_time
 
             ps_identifier = int(ps_identifier)
             Collection.client_ip[ps_identifier] = addr[0]
             ps_informations[ps_identifier].update_state(ps_identifier,
                                                         fg_name, fg_title,
                                                         cs_name, cs_title,
-                                                        time
+                                                        unix_time
                                                         )
         except Exception as e:
             print(f"데이터 수신 오류: {e}")
