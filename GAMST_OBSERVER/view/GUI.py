@@ -39,17 +39,18 @@ class GUI:
         self.seat_frame = LabelFrame(self.root, text="좌석", bg=BACKGROUND_FRAME_COLOR)
         self.seat_frame.pack(padx=30, pady=10)
 
-        self.seat_grids = []
-        for index in range(40):
+        self.seat_grids = [0]
+        for index in range(1, 41):
             button = Button(self.seat_frame, width=15, height=7, wraplength=110)
             button.config(command=partial(on_seat_button_click, index), bg=SEAT_OFFLINE_COLOR)  # 버튼 생성 후 command 설정
             self.seat_grids.append(button)
 
-        for row in range(5):
-            for column in range(8):
-                if column == 0:
+
+        for row in range(4, -1, -1):
+            for column in range(8, 0, -1):
+                if column == 1:
                     self.seat_grids[row * 8 + column].grid(row=row, column=column, padx=(20, 0))  # 좌측 패딩 추가
-                elif column % 2 == 1:
+                elif column % 2 == 0:
                     self.seat_grids[row * 8 + column].grid(row=row, column=column, padx=(0, 20))  # 우측 패딩 추가
                 if row == 0:
                     self.seat_grids[row * 8 + column].grid(row=row, column=column, pady=(10, 0))  # 상단 패딩 추가
