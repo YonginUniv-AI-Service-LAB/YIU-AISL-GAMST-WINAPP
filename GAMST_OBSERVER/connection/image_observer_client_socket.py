@@ -8,12 +8,8 @@ import struct
 import pickle
 import numpy as np
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
-sys.path.insert(0, parent_dir)
-
-from configuration.address import *
-from dto.Flag import *
+from GAMST_OBSERVER.connection.address import *
+from GAMST_OBSERVER.domain.Flag import *
 
 global client_socket
 

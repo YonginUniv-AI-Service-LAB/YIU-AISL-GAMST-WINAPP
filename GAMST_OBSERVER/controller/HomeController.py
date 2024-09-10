@@ -1,16 +1,14 @@
+from GAMST_OBSERVER.connection.image_observer_client_socket import *
+from GAMST_OBSERVER.connection.image_recoder_client_socket import *
+from GAMST_OBSERVER.connection.process_observer_socket import *
+from GAMST_OBSERVER.domain.Flag import *
+from GAMST_OBSERVER.domain.Collection import *
+from GAMST_OBSERVER.view.styles.home import *
+
 import multiprocessing
-import threading
-
-from configuration.gui_color import *
-from configuration.address import *
-from connection.image_observer_client_socket import *
-from connection.image_recorder_client_socket import *
-from dto.Flag import *
-from dto.Collection import *
-from dto.ReportedInformation import *
 
 
-def on_seat_button_click(button_index):
+def on_seat_button_event(button_index):
     Flag.is_view = False
 
     print("seat_event(), 1. 좌석 버튼 감지 0.1초간 대기")
@@ -26,7 +24,7 @@ def on_seat_button_click(button_index):
     print(f"seat_event(), 3. 좌석 영상 프로세스 {button_index}번 시작")
 
 
-def on_record_button_click(button_object):
+def on_record_button_event(button_object):
     if not Flag.is_record:
         Flag.is_record = True
         for identifier, ip in Collection.client_ip.items():

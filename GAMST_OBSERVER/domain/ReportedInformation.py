@@ -16,6 +16,6 @@ class ReportedInformation:
         self.unix_time = unix_time
 
 
-from configuration.address import *
+from GAMST_OBSERVER.connection.address import *
 
 ps_informations = [ReportedInformation() for _ in range(CLIENT_COUNTS)]
