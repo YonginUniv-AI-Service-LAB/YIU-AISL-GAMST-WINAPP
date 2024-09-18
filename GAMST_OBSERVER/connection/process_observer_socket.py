@@ -5,17 +5,13 @@ import json
 import atexit
 import signal
 import socket
-import datetime
 
-from GAMST_OBSERVER.connection.address import *
 from GAMST_OBSERVER.domain.Collection import *
 from GAMST_OBSERVER.domain.ReportedInformation import *
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
 sys.path.insert(0, parent_dir)
-
-
 
 global server_socket
 

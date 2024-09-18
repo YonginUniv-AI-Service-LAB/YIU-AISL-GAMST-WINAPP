@@ -3,7 +3,7 @@ from GAMST_OBSERVER.connection.image_recoder_client_socket import *
 from GAMST_OBSERVER.connection.process_observer_socket import *
 from GAMST_OBSERVER.domain.Flag import *
 from GAMST_OBSERVER.domain.Collection import *
-from GAMST_OBSERVER.view.styles.home import *
+from GAMST_OBSERVER.view.styles.colors import *
 
 import multiprocessing
 

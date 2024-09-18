@@ -6,7 +6,8 @@ build
 videos
 
 # File
-# address.py
+address.py
+process_word.py
 
 # Extension
 *.pyc

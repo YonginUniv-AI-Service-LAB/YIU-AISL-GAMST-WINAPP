@@ -94,4 +94,4 @@ def start_image_observer_client_socket(host, identifier):
 
 
 if __name__ == '__main__':
-    start_image_observer_client_socket("localhost", 0)
+    start_image_observer_client_socket("localhost", 1)
